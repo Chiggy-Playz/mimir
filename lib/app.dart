@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimir/providers/login.dart';
 import 'package:mimir/ui/pages/login/phase_one.dart';
+import 'package:mimir/ui/pages/login/phase_two.dart';
 import 'package:mimir/ui/pages/splash.dart';
 import 'package:mimir/ui/styles/theme.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +29,15 @@ class MimirApp extends StatelessWidget {
       title: 'Mimir',
       theme: appThemeLight,
       darkTheme: appThemeDark,
-      themeMode: ThemeMode.dark,
-      // home: const SplashScreen(),
+      themeMode: ThemeMode.system,
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => const SplashScreen(),
-        "/login": (context) => Provider.value(
+        "/login_phase_one": (context) => Provider.value(
               value: LoginProvider(),
               child: const LoginPhaseOnePage(),
             ),
+        "/login_phase_two": (context) => const LoginPhaseTwoPage(),
       },
     );
   }

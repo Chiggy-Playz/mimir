@@ -30,7 +30,7 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 5.w,
-          vertical: 5.h,
+          vertical: 10.h,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -40,12 +40,12 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
                 child: Hero(
                   tag: "mimirHeading",
                   child: Text(
-                    "MIMIR",
+                    'MIMIR',
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
               ),
-              SizedBox(height: 25.h),
+              SizedBox(height: 20.h),
               Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -101,10 +101,12 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
       _loading = true;
     });
     // sleep 3 seconds
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
       _loading = false;
     });
+    if (!mounted) return;
+    Navigator.pushNamed(context, "/login_phase_two");
   }
 }

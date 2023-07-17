@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'login/phase_one.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -15,9 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
     _checkLogin().then(
       (value) {
         if (value) {
-          Navigator.popAndPushNamed(context, "/login");
+          Navigator.pushReplacementNamed(context, "/login_phase_one");
         } else {
-          Navigator.popAndPushNamed(context, "/login");
+          Navigator.pushReplacementNamed(context, "/login_phase_one");
         }
       },
     ).catchError((error) {
@@ -32,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> _checkLogin() async {
     // For development purposes, wait 3 seconds
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 1500));
     return false;
   }
 

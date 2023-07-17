@@ -6,7 +6,12 @@ extension ShowSnackBar on BuildContext {
     Color? backgroundColor,
   }) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
-      content: Text(message),
+      content: Text(
+        message,
+        style: backgroundColor == null
+            ? null
+            : TextStyle(color: Theme.of(this).colorScheme.onError),
+      ), // assuming that only error color will be provided as background color :skull:
       backgroundColor:
           backgroundColor ?? Theme.of(this).snackBarTheme.backgroundColor,
     ));
