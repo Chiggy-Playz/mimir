@@ -1,12 +1,10 @@
-![Mimir Logo](/images/github_image.png)
+![Mimir Logo](/images/Mimir_banner.png)
 
 ## Table Of Contents
 * [Introduction](#introduction)
 * [Features](#features)
 * [Screenshots](#screenshots)
-* [Installation](#installation)
 * [Contributing](#contributing)
-* [Support](#support)
 * [License](#license)
 * [Acknowledgments](#acknowledgments)
 
@@ -15,7 +13,7 @@
 Mimir is an open-source third-party mobile application designed to provide a seamless connection to the Audiobookshelf server. It offers a user-friendly interface, extensive customization options, and convenient access to a wide range of audiobooks, books, and podcasts available on the Audiobookshelf platform.
 ## Features
 
-- **Easy Connection to Audiobookshelf**: Mimir serves as a client-side application, connecting directly to the Audiobookshelf server. It simplifies the process of accessing the Audiobookshelf library, making it effortless to discover and enjoy a vast collection of audiobooks, books, and podcasts.
+- **Easy Connection to Audiobookshelf**: Mimir serves as a client-side application, connecting directly to the Audiobookshelf server. It simplifies the process of accessing the Audiobookshelf library.
 
 - **User-Friendly Interface**: Mimir boasts an intuitive and user-friendly interface, ensuring a seamless browsing and listening experience. The app's design focuses on simplicity and ease of use, allowing you to navigate through your favorite content effortlessly.
 
@@ -30,15 +28,7 @@ Mimir is an open-source third-party mobile application designed to provide a sea
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-  
-## Installation
 
-Install my-project with npm
-
-```bash
-  npm install my-project
-  cd my-project
-```
 ## Contributing
 
 Contributions are always welcome!
@@ -64,10 +54,6 @@ If you find a bug (the website couldn't handle the query and / or gave undesired
 
 If you'd like to request a new function, feel free to do so by opening an issue here. Please include sample queries and their corresponding results.
 
-## Support
-
-For support, email fake@fake.com or join our Slack channel.
-
   
 ## License
 
@@ -83,9 +69,5 @@ Thank you for choosing Mimir! We hope you enjoy your reading and listening exper
 ## Authors
 
 - [@TheChirag356](https://github.com/TheChirag356)
+- [@Chiggy-Playz](https://github.com/Chiggy-Playz)
 
-  
-## Buy Us A Coffee
-Whether you use this project, have learned something from it, or just like it, please consider supporting it by buying me a coffee, so I can dedicate more time on open-source projects like this :)
-
-Buy Me A Coffee
