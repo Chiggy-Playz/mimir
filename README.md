@@ -1,4 +1,4 @@
-![Mimir Logo](github_image.png)
+![Mimir Logo](/images/github_image.png)
 
 ## Table Of Contents
 * [Introduction](#introduction)
