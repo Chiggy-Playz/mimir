@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 extension ShowSnackBar on BuildContext {
   void showSnackBar({
     required String message,
+    Color? textColor,
     Color? backgroundColor,
   }) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
@@ -10,8 +11,8 @@ extension ShowSnackBar on BuildContext {
         message,
         style: backgroundColor == null
             ? null
-            : TextStyle(color: Theme.of(this).colorScheme.onError),
-      ), // assuming that only error color will be provided as background color :skull:
+            : TextStyle(color: textColor),
+      ),
       backgroundColor:
           backgroundColor ?? Theme.of(this).snackBarTheme.backgroundColor,
     ));

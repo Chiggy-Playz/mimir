@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mimir/ui/styles/context.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mimir/providers/http_service.dart';
+import 'package:mimir/services/context.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../styles/theme.dart';
 import '../../widgets/gradient_scaffold.dart';
 import '../../widgets/loading_button.dart';
 
-class LoginPhaseOnePage extends StatefulWidget {
+class LoginPhaseOnePage extends ConsumerStatefulWidget {
   const LoginPhaseOnePage({super.key});
 
   @override
-  State<LoginPhaseOnePage> createState() => _LoginPhaseOnePageState();
+  ConsumerState<LoginPhaseOnePage> createState() => _LoginPhaseOnePageState();
 }
 
-class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
+class _LoginPhaseOnePageState extends ConsumerState<LoginPhaseOnePage> {
   String _serverAddress = "";
   bool _loading = false;
   final _formKey = GlobalKey<FormFieldState>();
@@ -23,7 +25,7 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
     return GradientScaffold(
       gradient: LinearGradient(
         // TODO: make gradient colors dynamic using app prefs
-        colors: getGradientColors(MediaQuery.of(context).platformBrightness),
+        colors: getGradientColors(Brightness.dark),
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
       ),
@@ -71,7 +73,8 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
               SizedBox(height: 1.h),
               TextFormField(
                 key: _formKey,
-                decoration: const InputDecoration(hintText: "server address"),
+                decoration: const InputDecoration(
+                    hintText: "http(s)://server_address[:13378]"),
                 readOnly: _loading,
                 validator: (value) => value!.isEmpty ? "Required" : null,
                 onChanged: (value) {
@@ -83,7 +86,7 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
                 },
               ),
               SizedBox(height: 5.h),
-              LoadingButton(onConnect: _onConnect)
+              LoadingButton(onClick: _onConnect)
             ],
           ),
         ),
@@ -100,13 +103,24 @@ class _LoginPhaseOnePageState extends State<LoginPhaseOnePage> {
     setState(() {
       _loading = true;
     });
-    // sleep 3 seconds
-    await Future.delayed(const Duration(seconds: 1));
+
+    // Validate server address
+    final valid = await ref
+        .read(httpClientProvider)
+        .validateServerAddress(_serverAddress);
+    if (!valid) {
+      setState(() {
+        _loading = false;
+      });
+      if (!mounted) return;
+      context.showErrorSnackBar(message: "Invalid server address.");
+      return;
+    }
 
     setState(() {
       _loading = false;
     });
     if (!mounted) return;
-    Navigator.pushNamed(context, "/login_phase_two");
+    Navigator.pushNamed(context, "/login_phase_two", arguments: _serverAddress);
   }
 }

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mimir/providers/hive.dart';
+import 'package:mimir/providers/http_service.dart';
+import 'package:mimir/services/context.dart';
 import 'package:mimir/ui/styles/theme.dart';
 import 'package:mimir/ui/widgets/gradient_scaffold.dart';
 import 'package:mimir/ui/widgets/loading_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class LoginPhaseTwoPage extends StatefulWidget {
-  const LoginPhaseTwoPage({super.key});
+class LoginPhaseTwoPage extends ConsumerStatefulWidget {
+  const LoginPhaseTwoPage({super.key, required this.serverAddress});
+
+  final String serverAddress;
 
   @override
-  State<LoginPhaseTwoPage> createState() => _LoginPhaseTwoPageState();
+  ConsumerState<LoginPhaseTwoPage> createState() => _LoginPhaseTwoPageState();
 }
 
-class _LoginPhaseTwoPageState extends State<LoginPhaseTwoPage> {
+class _LoginPhaseTwoPageState extends ConsumerState<LoginPhaseTwoPage> {
   String _username = "";
   String _password = "";
   bool _loading = false;
@@ -21,7 +27,8 @@ class _LoginPhaseTwoPageState extends State<LoginPhaseTwoPage> {
   Widget build(BuildContext context) {
     return GradientScaffold(
       gradient: LinearGradient(
-        colors: getGradientColors(MediaQuery.of(context).platformBrightness),
+        // TODO: make gradient colors dynamic using prefs
+        colors: getGradientColors(Brightness.dark),
         begin: Alignment.bottomLeft,
         end: Alignment.topRight,
       ),
@@ -91,12 +98,47 @@ class _LoginPhaseTwoPageState extends State<LoginPhaseTwoPage> {
                   },
                 ),
                 SizedBox(height: 10.h),
-                LoadingButton(onConnect: () async {})
+                LoadingButton(onClick: _onLogin)
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _onLogin() async {
+    if (!_formKey.currentState!.validate()) {
+      context.showErrorSnackBar(
+          message: "Please enter a username and password.");
+      return;
+    }
+
+    setState(() {
+      _loading = true;
+    });
+
+    // Attempt login
+    final response = await ref
+        .read(httpClientProvider)
+        .login(username: _username, password: _password);
+    if (!mounted) return;
+
+    if (response == null) {
+      setState(() {
+        _loading = false;
+      });
+      context.showErrorSnackBar(message: "Invalid username or password.");
+      return;
+    }
+
+    setState(() {
+      _loading = false;
+    });
+
+    await (await ref.read(hiveDbProvider.future))
+        .saveCredentials(widget.serverAddress, response.user.token);
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil("/home", (route) => false);
   }
 }

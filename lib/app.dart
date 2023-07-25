@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mimir/providers/login.dart';
+import 'package:mimir/ui/pages/home.dart';
 import 'package:mimir/ui/pages/login/phase_one.dart';
 import 'package:mimir/ui/pages/login/phase_two.dart';
 import 'package:mimir/ui/pages/splash.dart';
 import 'package:mimir/ui/styles/theme.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'models/appstate.dart';
-
 Widget getApp() {
-  return ChangeNotifierProvider.value(
-    value: AppStateModel(),
-    child: ResponsiveSizer(
-      builder: (context, orientation, screenType) {
-        return const MimirApp();
-      },
-    ),
+  return ResponsiveSizer(
+    builder: (context, orientation, screenType) {
+      return const MimirApp();
+    },
   );
 }
 
@@ -29,15 +23,13 @@ class MimirApp extends StatelessWidget {
       title: 'Mimir',
       theme: appThemeLight,
       darkTheme: appThemeDark,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => const SplashScreen(),
-        "/login_phase_one": (context) => Provider.value(
-              value: LoginProvider(),
-              child: const LoginPhaseOnePage(),
-            ),
-        "/login_phase_two": (context) => const LoginPhaseTwoPage(),
+        "/login_phase_one": (context) => const LoginPhaseOnePage(),
+        "/login_phase_two": (context) => LoginPhaseTwoPage(serverAddress: ModalRoute.of(context)!.settings.arguments as String),
+        "/home": (context) => const HomePage(),
       },
     );
   }

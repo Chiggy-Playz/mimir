@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'custom_color.g.dart';
 
 ThemeData appThemeLight = ThemeData(
   brightness: Brightness.light,
@@ -65,6 +66,7 @@ ThemeData appThemeLight = ThemeData(
       ),
     ),
   ),
+  extensions: [lightSuccessCustomColors],
 );
 
 ThemeData appThemeDark = ThemeData(
@@ -130,6 +132,7 @@ ThemeData appThemeDark = ThemeData(
       ),
     ),
   ),
+  extensions: [darkSuccessCustomColors],
 );
 
 List<Color> getGradientColors(Brightness currentBrightness) {
@@ -141,8 +144,8 @@ List<Color> getGradientColors(Brightness currentBrightness) {
     ];
   }
   return const [
-     Color(0xFF303030),
-    Color(0xFF1E1E1E), 
+    Color(0xFF303030),
+    Color(0xFF1E1E1E),
     Color(0xFF1B1B1B),
   ];
 }

@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LoadingButton extends StatefulWidget {
-  const LoadingButton({super.key, required this.onConnect});
+  const LoadingButton({super.key, required this.onClick});
 
-  final Future<void> Function() onConnect;
+  final Future<void> Function() onClick;
 
   @override
   State<LoadingButton> createState() => _LoadingButtonState();
@@ -67,7 +66,7 @@ class _LoadingButtonState extends State<LoadingButton>
       _loading = true;
     });
     _controller.forward();
-    await widget.onConnect();
+    await widget.onClick();
     _controller.reverse();
     setState(() {
       _loading = false;
